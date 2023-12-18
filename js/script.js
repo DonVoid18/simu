@@ -1,4 +1,5 @@
 const inter = 1
+const pauseDuration = (Math.floor(Math.random() * 5) + 1) * 1000
 const clients = document.querySelectorAll(".client")
 
 // Establecer posición inicial de los clientes
@@ -11,20 +12,41 @@ clients.forEach((client, index) => {
 // Función para mover un cliente
 function moveClient(client, speed) {
   let nuevaPosicionLeft = 0
-  const intervalId = setInterval(() => {
-    nuevaPosicionLeft = parseFloat(client.style.left) + speed
-    client.style.left = nuevaPosicionLeft + "px"
+  const targetPosition = 1330
 
-    if (nuevaPosicionLeft >= 1400) {
-      clearInterval(intervalId)
-      client.style.display = "none" // Oculta la imagen
-    }
-  }, inter)
+  function move() {
+    const intervalId = setInterval(() => {
+      nuevaPosicionLeft = parseFloat(client.style.left) + speed
+      client.style.left = nuevaPosicionLeft + "px"
+
+      if (nuevaPosicionLeft >= targetPosition) {
+        clearInterval(intervalId)
+
+        // Pausar por 2 segundos en la posición 1350px
+        setTimeout(() => {
+          continueMovement()
+        }, pauseDuration)
+      }
+    }, inter)
+  }
+
+  function continueMovement() {
+    const intervalId = setInterval(() => {
+      nuevaPosicionLeft = parseFloat(client.style.left) + speed
+      client.style.left = nuevaPosicionLeft + "px"
+
+      if (nuevaPosicionLeft >= 1400) {
+        clearInterval(intervalId)
+        client.style.display = "none" // Oculta la imagen
+      }
+    }, inter)
+  }
+
+  move()
 }
 
 // Mover cada cliente con una velocidad diferente
 clients.forEach((client, index) => {
-  console.log(client, index)
   switch (index) {
     case 0:
       moveClient(client, 0.5)
