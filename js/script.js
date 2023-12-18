@@ -9,6 +9,12 @@ clients.forEach((client, index) => {
   client.style.left = "0px"
 })
 
+function resetPosition(client) {
+  client.style.display = "block" // Asegura que la imagen esté visible
+  client.style.left = "0px"
+}
+
+
 // Función para mover un cliente
 function moveClient(client, speed) {
   let nuevaPosicionLeft = 0
@@ -24,6 +30,7 @@ function moveClient(client, speed) {
 
         // Pausar por 2 segundos en la posición 1350px
         setTimeout(() => {
+          resetPosition(client) // Reinicia la posición del cliente
           continueMovement()
         }, pauseDuration)
       }
